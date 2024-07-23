@@ -1,10 +1,8 @@
-from fastapi import FastAPI
-
-# from fastapi.responses import HTMLResponse
-
 from http import HTTPStatus
 
-from fast_zero.schemas import Message, UserSchema, UserPublic
+from fastapi import FastAPI
+
+from fast_zero.schemas import Message, UserDB, UserPublic, UserSchema
 
 app = FastAPI()
 
@@ -18,17 +16,8 @@ def read_root():
 
 @app.post('/users/', response_model=UserPublic)
 def create_user(user: UserSchema):
+    user_with_id = UserDB(id=len(database) + 1, **user.model_dump())
 
-    return user
+    database.append(user_with_id)
 
-# @app.get('/', status_code=HTTPStatus.OK, response_class=HTMLResponse)
-# def read_root():
-#     return """
-#     <html>
-#         <head>
-#             <title> Nosso olá mundo!</title>
-#         </head>
-#         <body>
-#             <h1> Olá Mundo </h1>
-#         </body>
-#     </html> """
+    return user_with_id
