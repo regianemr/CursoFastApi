@@ -18,7 +18,7 @@ def test_create_user(client):
         },
     )
     # Voltou o status code correto?
-    assert response.status_code == 200
+    assert response.status_code == HTTPStatus.OK
     # Validar UserPublic
     assert response.json() == {
         'username': 'testusername',
@@ -30,11 +30,31 @@ def test_create_user(client):
 def test_read_users(client):
     response = client.get('/users/')
 
-    assert response.status_code == 200
-    assert response.json() == {'users': [
-        {
-            'username': 'testusername',
+    assert response.status_code == HTTPStatus.OK
+    assert response.json() == {
+        'users': [
+            {
+                'username': 'testusername',
+                'email': 'test@test.com',
+                'id': 1,
+            }
+        ]
+    }
+
+
+def test_update_user(client):
+    response = client.put(
+        '/users/1',
+        json={
+            'password': '123',
+            'username': 'testusername2',
             'email': 'test@test.com',
             'id': 1,
-        }
-    ]}
+        },
+    )
+
+    assert response.json() == {
+        'username': 'testusername2',
+        'email': 'test@test.com',
+        'id': 1,
+    }
