@@ -66,7 +66,7 @@ def test_delete_user(client):
     assert response.status_code == HTTPStatus.OK
     assert response.json() == {'mensagem': 'User deleted'}
 
-# Teste exercício
+# exercício 1 - escreva um teste para o erro de 404 para o PUT
 
 
 def test_update_user_erro(client):
@@ -83,3 +83,12 @@ def test_update_user_erro(client):
     assert response.json() == {
         'detail': 'User not found'
     }
+
+# exercício 2 - escreva um teste para o erro de 404 para o Delete
+
+
+def test_error_delete_user(client):
+    response = client.delete('/users/1')
+
+    assert response.status_code == HTTPStatus.NOT_FOUND
+    assert response.json() == {'detail': 'User not found'}
