@@ -1,10 +1,13 @@
 from sqlalchemy import select
-
 from fast_zero.models import User
 
 
 def test_create_user(session):
-    user = User(username='regiane', email='regi@gmail.com', password='senha')
+    user = User(
+        username='regiane',
+        email='regi@gmail.com',
+        password='senha',
+    )
     session.add(user)
     session.commit()
 
