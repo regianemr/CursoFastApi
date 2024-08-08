@@ -16,5 +16,7 @@ class User:
     password: Mapped[str]
     email: Mapped[str] = mapped_column(unique=True)  # campo deve ser único
     created_at: Mapped[datetime] = mapped_column(
-        init=False, server_default=func.now()
+        init=False, server_default=func.now())
+    update_at: Mapped[datetime] = mapped_column(
+        init=False, server_default=func.now(), onupdate=func.now()
     )  # server default pega a hora do servidor
